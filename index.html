@@ -14,8 +14,7 @@ body {
   background: #050008;
   color: #ffffff;
   font-family: Poppins, sans-serif;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .page {
@@ -27,12 +26,8 @@ body {
   justify-content: center;
   padding: 24px;
   text-align: center;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
-.page.active {
-  display: flex;
-}
+.page.active { display: flex; }
 
 /* ===== SPARKLES ===== */
 .sparkle {
@@ -84,7 +79,6 @@ svg circle { fill:none; stroke-width:6 }
   transform-origin:50% 50%;
   transition:stroke-dashoffset 1s linear;
 }
-
 /* ===== PAGE 1 POLISH ===== */
 .p1-wrapper {
   position: relative;
@@ -93,6 +87,7 @@ svg circle { fill:none; stroke-width:6 }
   align-items: center;
   gap: 14px;
 }
+
 .p1-glow {
   position: absolute;
   width: 260px;
@@ -107,17 +102,32 @@ svg circle { fill:none; stroke-width:6 }
   filter: blur(20px);
   z-index: 0;
 }
-.hold-wrapper { z-index: 1 }
-.p1-hint { font-size: 14px; opacity: 0.65; margin-top: 8px; }
-.p1-subtle { font-size: 15px; opacity: 0.75; }
 
-/* ===== PAGE 2 ===== */
+.hold-wrapper {
+  z-index: 1;
+}
+
+.p1-hint {
+  font-size: 14px;
+  opacity: 0.65;
+  margin-top: 8px;
+  letter-spacing: 0.4px;
+}
+
+.p1-subtle {
+  font-size: 15px;
+  opacity: 0.75;
+}
+
+
+/* ===== PAGE 2 (NEW DESIGN) ===== */
 .page-2-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
+
 .page-2-heart {
   width: 90px;
   height: 90px;
@@ -131,8 +141,15 @@ svg circle { fill:none; stroke-width:6 }
     0 0 80px rgba(179, 107, 255, 0.25);
   margin-bottom: 6px;
 }
-.page-2-heart span { font-size: 34px }
-.subtitle { font-size: 15px; opacity: 0.75; }
+
+.page-2-heart span {
+  font-size: 34px;
+}
+
+.subtitle {
+  font-size: 15px;
+  opacity: 0.75;
+}
 
 .boxes {
   width: 100%;
@@ -142,39 +159,90 @@ svg circle { fill:none; stroke-width:6 }
   gap: 16px;
   margin: 28px 0 34px;
 }
+
 .box {
   position: relative;
   height: 56px;
   border-radius: 999px;
   cursor: pointer;
-  background: radial-gradient(
-    120% 120% at 50% 0%,
-    rgba(180, 140, 255, 0.12),
-    rgba(10, 5, 20, 0.65)
-  );
+
+  /* blended with OG background */
+  background:
+    radial-gradient(
+      120% 120% at 50% 0%,
+      rgba(180, 140, 255, 0.12),
+      rgba(10, 5, 20, 0.65)
+    );
+
   backdrop-filter: blur(8px);
   border: 1px solid rgba(180, 140, 255, 0.15);
+
   box-shadow:
     0 0 20px rgba(120, 80, 200, 0.18),
     inset 0 0 25px rgba(255, 255, 255, 0.04);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
+.box:hover {
+  transform: scale(1.015);
+  box-shadow:
+    0 0 26px rgba(160, 120, 255, 0.25),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+}
+
 .box .center-heart {
   font-size: 22px;
-  color: rgba(255, 170, 210, 0.85);
+  color: rgba(255, 170, 210, 0.85); /* muted blush */
+  transition: opacity 0.3s ease;
 }
+
 .box span {
   position: absolute;
   opacity: 0;
+  transform: translateY(6px);
   transition: 0.4s ease;
   font-size: 17px;
   color: #ffffff;
   padding: 0 22px;
 }
-.box.revealed .center-heart { opacity: 0 }
-.box.revealed span { opacity: 1 }
+
+.box.revealed .center-heart {
+  opacity: 0;
+}
+
+.box.revealed span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== MOBILE FIX: PAGE 2 OVERFLOW ===== */
+#p2 {
+  justify-content: flex-start;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  overflow-y: auto;
+}
+
+@media (max-height: 750px) {
+  #p2 {
+    padding-top: 24px;
+  }
+
+  #p2 .page-2-heart {
+    width: 72px;
+    height: 72px;
+  }
+
+  #p2 h2 {
+    font-size: 28px;
+  }
+}
+
 
 /* ===== PAGE 3 ===== */
 .hero-img {
@@ -195,45 +263,79 @@ svg circle { fill:none; stroke-width:6 }
   100%{transform:scale(1)}
 }
 
-/* ===== PAGE 4 FIX ===== */
-#p4 {
-  justify-content: flex-start;
-  padding-top: 32px;
-}
-.message-wrapper {
-  width: 100%;
-  max-width: 520px;
-  display: flex;
-  justify-content: center;
-}
+/* ===== PAGE 4 ===== */
 .message-box {
-  width: 100%;
-  background: linear-gradient(180deg, #ffffff, #faf7ff);
+  width: 95%;
+  max-width: 520px;
+
+  /* soft parchment-like base */
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #faf7ff
+  );
+
   color: #1a1025;
   padding: 32px;
   border-radius: 26px;
-  font-size: 17px;
-  line-height: 1.7;
+  max-height: 70vh;
+  overflow-y: auto;
   position: relative;
+  font-size: 18px;
+  line-height: 1.7;
+
+  /* depth + focus */
+  box-shadow:
+    0 20px 50px rgba(120, 80, 200, 0.35),
+    0 0 0 1px rgba(180, 140, 255, 0.25),
+    inset 0 0 30px rgba(255, 200, 235, 0.25);
+
+  backdrop-filter: blur(2px);
 }
-.message-box .flower {
+.message-box {
+  animation: messageGlow 1.2s ease-out both;
+}
+
+@keyframes messageGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    box-shadow:
+      0 0 0 rgba(0,0,0,0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.message-box img {
+  width:70px;
+  position:absolute;
+}
+.l1 {
+  top: -18px;
+  left: -18px;
   position: absolute;
-  width: 56px;
+}
+
+.l2 {
+  position: absolute;
+  bottom: -18px;
+  right: -18px;
+}
+
+/* 🔒 Prevent flowers from scrolling */
+.message-box {
+  overflow: auto;
+}
+
+.message-box img {
   pointer-events: none;
 }
-.message-box .tl { top: 12px; left: 12px; }
-.message-box .tr { top: 12px; right: 12px; }
-.message-box .bl { bottom: 12px; left: 12px; }
-.message-box .br { bottom: 12px; right: 12px; }
-
-/* ===== FIREWORKS ===== */
-#fireworks-canvas {
-  position: fixed;
-  inset: 0;
-  width:100vw;
-  height:100vh;
-  pointer-events:none;
-  z-index:1;
+@media (max-width: 480px) {
+  .message-box {
+    padding-bottom: 60px;
+  }
 }
 
 button {
@@ -245,6 +347,16 @@ button {
   background:#b38cff;
   color:white;
   cursor:pointer;
+}
+
+/* ===== FIREWORKS ===== */
+#fireworks-canvas {
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  pointer-events:none;
+  z-index:1;
 }
 </style>
 </head>
@@ -262,34 +374,181 @@ for(let i=0;i<80;i++){
 }
 </script>
 
-<!-- PAGE 4 (unchanged content, fixed layout) -->
-<div class="page" id="p4">
-  <h2>For pretty baby lei :)</h2>
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+  <div class="p1-wrapper">
 
-  <div class="message-wrapper">
-    <div class="message-box">
-      <img src="lily.webp" class="flower tl">
-      <img src="lily.webp" class="flower tr">
-      <img src="lily.webp" class="flower bl">
-      <img src="lily.webp" class="flower br">
+    <h2>A little surprise for you</h2>
+    <div class="p1-subtle">Before this year begins</div>
 
-      <p>
-        Hey Lei,<br><br>
-        I wish you a very happy new year. I want you to know that I'm very proud of you.
-        I hope this year brings you the freedom, peace and happiness you have always longed for.
-        Wherever life may take you, I hope you always keep smiling and know that you're deeply cherished
-        and cared for so you never doubt yourself.<br><br>
+    <div class="p1-glow"></div>
 
-        always wishing you well,<br><br>
-        Raab&lt;3
-      </p>
+    <div class="hold-wrapper">
+      <svg width="150" height="150">
+        <circle class="ring-bg" cx="75" cy="75" r="50"/>
+        <circle class="ring-progress" cx="75" cy="75" r="50"/>
+      </svg>
+      <div class="heart" id="heart">💜</div>
+    </div>
+
+    <div class="p1-hint">Press & hold</div>
+
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+  <div class="page-2-header">
+    <div class="page-2-heart">
+      <span>💗</span>
+    </div>
+
+    <h2>The way I saw you ✨</h2>
+    <div class="subtitle">Tap each one to reveal</div>
+  </div>
+
+  <div class="boxes">
+    <div class="box">
+      <div class="center-heart">♡</div>
+      <span>The more I noticed you, the more beautiful you became.</span>
+    </div>
+
+    <div class="box">
+      <div class="center-heart">♡</div>
+      <span>Your smile is the brightest one I've ever seen</span>
+    </div>
+
+    <div class="box">
+      <div class="center-heart">♡</div>
+      <span>You showed up everyday, even when it wasn't easy</span>
+    </div>
+
+    <div class="box">
+      <div class="center-heart">♡</div>
+      <span>You’re the best person I ever met</span>
+    </div>
+
+    <div class="box">
+      <div class="center-heart">♡</div>
+      <span>You lit up my 2025</span>
     </div>
   </div>
 
+  <button onclick="go(3)">See more →</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+  <img src="card-front.webp" class="hero-img">
+  <div class="envelope" onclick="go(4)">💌</div>
+  <p>Tap the envelope</p>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+  <h2>For pretty baby lei :)</h2>
+  <div class="message-box">
+    <img src="lily.webp" class="l1">
+    <img src="lily.webp" class="l2">
+    <p> Hey Lei,<br><br> I wish you a very happy new year. I want you to know that I'm very proud of you. I hope this year brings you the freedom, peace and happiness you have always longed for. Wherever life may take you, I hope you always keep smiling and know that you're deeply cherished and cared for so you never doubt yourself. I'll always pray and wish for your success and well being. Always remember you're very special so don't let others take away what's given to you by God Himself. And I hope our paths may cross again someday, maybe over that coffee we talked about. <br><br> always wishing you well, <br><br> Raab<3
+ </p>
+  </div>
   <button onclick="handleFireworks()">Watch fireworks</button>
 </div>
 
+<!-- PAGE 5 -->
+<div class="page" id="p5">
+  <canvas id="fireworks-canvas"></canvas>
+  <h2 style="z-index:2">I hope this year is kinder to you,<br>and reminds you how deeply loved you are.</h2>
+  <img src="final.gif" style="width:90%;max-width:420px;margin-top:20px;z-index:2;">
+</div>
+
+<script src="index.umd.js"></script>
+
+<script>
+let unlocked=false;
+function unlockSound(){
+  if(unlocked) return;
+  const a=new Audio("explosion0.mp3");
+  a.volume=0;
+  a.play().then(()=>{a.pause();unlocked=true});
+}
+
+let holdTimer;
+const ring=document.querySelector(".ring-progress");
+const heart=document.getElementById("heart");
+
+heart.onmousedown=heart.ontouchstart=()=>{
+  ring.style.strokeDashoffset=0;
+  holdTimer=setTimeout(()=>go(2),1000);
+};
+heart.onmouseup=heart.ontouchend=()=>{
+  ring.style.strokeDashoffset=314;
+  clearTimeout(holdTimer);
+};
+
+function go(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("p"+n).classList.add("active");
+}
+
+document.querySelectorAll(".box").forEach(box=>{
+  box.onclick=()=>box.classList.add("revealed");
+});
+
+let fireworksInstance=null;
+let soundInterval=null;
+
+function handleFireworks(){
+  unlockSound();
+  go(5);
+  startFireworks();
+  startRomanticSound();
+}
+
+function startFireworks(){
+  if(fireworksInstance) return;
+  const canvas=document.getElementById("fireworks-canvas");
+
+  fireworksInstance=new Fireworks.default(canvas,{
+    autoresize:true,
+    opacity:0.2,
+    intensity:22,
+    delay:{min:55,max:95},
+    traceSpeed:3.5,
+    acceleration:1.012,
+    friction:0.975,
+    gravity:1.25,
+    particles:95,
+    explosion:5,
+    traceLength:4,
+    hue:{min:255,max:285},
+    sound:{enabled:false}
+  });
+
+  fireworksInstance.start();
+}
+
+function startRomanticSound(){
+  if(soundInterval) return;
+  const sounds=[
+    new Audio("explosion0.mp3"),
+    new Audio("explosion1.mp3")
+  ];
+  sounds.forEach(s=>s.volume=0.25);
+
+  soundInterval=setInterval(()=>{
+    const s=sounds[Math.floor(Math.random()*sounds.length)];
+    s.currentTime=0;
+    s.play();
+  },3500);
+}
+</script>
+
 </body>
 </html>
+
+
+
 
 
