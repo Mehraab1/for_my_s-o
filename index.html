@@ -14,28 +14,48 @@ body {
   background: #050008;
   color: #ffffff;
   font-family: Poppins, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
+/* ================= PAGE SYSTEM (iOS SAFE) ================= */
 .page {
   position: absolute;
   inset: 0;
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 24px;
   text-align: center;
-  transform: translateZ(0); /* iOS stability */
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%);
+  transition: transform 0.45s ease, opacity 0.35s ease;
 }
 
-.page.active { display: flex; }
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
 
+/* ================= GENERAL ================= */
 img {
-  display: block;
   max-width: 100%;
   height: auto;
-  transform: translateZ(0);
+}
+
+h2 {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 32px;
+  color: #f5f0ff;
+}
+
+p {
+  font-size: 17px;
 }
 
 /* ================= SPARKLES ================= */
@@ -53,18 +73,8 @@ img {
   50% { opacity: 1 }
 }
 
-/* ================= TEXT ================= */
-h2 {
-  font-family: "Playfair Display", serif;
-  font-style: italic;
-  font-size: 32px;
-  color: #f5f0ff;
-}
-p { font-size: 17px; }
-
 /* ================= PAGE 1 ================= */
 .p1-wrapper {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,20 +88,17 @@ p { font-size: 17px; }
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(180, 140, 255, 0.35),
-    rgba(180, 140, 255, 0.15),
+    rgba(180,140,255,0.35),
+    rgba(180,140,255,0.15),
     transparent 70%
   );
   filter: blur(20px);
-  z-index: 0;
 }
 
 .hold-wrapper {
   position: relative;
   width: 150px;
   height: 150px;
-  margin-top: 8px;
-  z-index: 1;
 }
 
 .heart {
@@ -130,15 +137,6 @@ svg circle { fill:none; stroke-width:6 }
 #p2 {
   justify-content: flex-start;
   padding-top: 32px;
-  padding-bottom: 32px;
-  overflow-y: auto;
-}
-
-.page-2-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
 }
 
 .page-2-heart {
@@ -146,10 +144,10 @@ svg circle { fill:none; stroke-width:6 }
   height: 80px;
   border-radius: 50%;
   background: radial-gradient(circle, #ff9acb, #b38cff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 40px rgba(255,154,203,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom: 10px;
 }
 
 .subtitle {
@@ -163,64 +161,49 @@ svg circle { fill:none; stroke-width:6 }
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin: 28px 0 34px;
+  margin: 28px 0;
 }
 
 .box {
   height: 56px;
   border-radius: 999px;
-  cursor: pointer;
   background:
     radial-gradient(
       120% 120% at 50% 0%,
-      rgba(180, 140, 255, 0.12),
-      rgba(10, 5, 20, 0.65)
+      rgba(180,140,255,0.12),
+      rgba(10,5,20,0.65)
     );
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(180, 140, 255, 0.15);
-  box-shadow:
-    0 0 20px rgba(120, 80, 200, 0.18),
-    inset 0 0 25px rgba(255,255,255,0.04);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid rgba(180,140,255,0.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
 }
 
-.box .center-heart {
-  font-size: 22px;
+.center-heart {
   color: rgba(255,170,210,0.85);
 }
 
 .box span {
-  position: absolute;
-  opacity: 0;
-  transition: 0.4s ease;
-  font-size: 17px;
+  position:absolute;
+  opacity:0;
+  transition:0.4s ease;
 }
 
-.box.revealed .center-heart { opacity: 0; }
-.box.revealed span { opacity: 1; }
+.box.revealed .center-heart { opacity:0 }
+.box.revealed span { opacity:1 }
 
 /* ================= PAGE 3 ================= */
 .hero-img {
   width: 95%;
   max-width: 460px;
   border-radius: 22px;
-  margin: 20px auto;
-  position: relative;
-  z-index: 2;
+  margin-bottom: 20px;
 }
 
 .envelope {
   font-size: 70px;
-  margin-top: 20px;
   cursor: pointer;
-  animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-  0%{transform:scale(1)}
-  50%{transform:scale(1.25)}
-  100%{transform:scale(1)}
 }
 
 /* ================= PAGE 4 ================= */
@@ -240,18 +223,12 @@ svg circle { fill:none; stroke-width:6 }
   border-radius: 26px;
   max-height: 70vh;
   overflow-y: auto;
-  position: relative;
-  font-size: 18px;
   line-height: 1.7;
-  box-shadow:
-    0 20px 50px rgba(120,80,200,0.35),
-    inset 0 0 30px rgba(255,200,235,0.25);
 }
 
 .flower {
   position: absolute;
   width: 70px;
-  pointer-events: none;
 }
 
 .flower.l1 { top: -18px; left: 6px; }
@@ -261,18 +238,13 @@ svg circle { fill:none; stroke-width:6 }
 #fireworks-canvas {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   pointer-events: none;
-  z-index: 1;
 }
 
 .final-gif {
   width: 90%;
   max-width: 420px;
   margin-top: 20px;
-  position: relative;
-  z-index: 3;
 }
 
 /* ================= BUTTON ================= */
@@ -304,8 +276,9 @@ for(let i=0;i<80;i++){
 <div class="page active" id="p1">
   <div class="p1-wrapper">
     <h2>A little surprise for you</h2>
-    <div>Before this year begins</div>
+    <p>Before this year begins</p>
     <div class="p1-glow"></div>
+
     <div class="hold-wrapper">
       <svg width="150" height="150">
         <circle class="ring-bg" cx="75" cy="75" r="50"/>
@@ -313,17 +286,16 @@ for(let i=0;i<80;i++){
       </svg>
       <div class="heart" id="heart">💜</div>
     </div>
+
     <div class="p1-hint">Press & hold</div>
   </div>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="p2">
-  <div class="page-2-header">
-    <div class="page-2-heart">💗</div>
-    <h2>You, in 2025 ✨</h2>
-    <div class="subtitle">Tap each one to reveal</div>
-  </div>
+  <div class="page-2-heart">💗</div>
+  <h2>You, in 2025 ✨</h2>
+  <div class="subtitle">Tap each one to reveal</div>
 
   <div class="boxes">
     <div class="box"><div class="center-heart">♡</div><span>The more I notice you, the more beautiful you become.</span></div>
@@ -364,7 +336,7 @@ for(let i=0;i<80;i++){
 <!-- PAGE 5 -->
 <div class="page" id="p5">
   <canvas id="fireworks-canvas"></canvas>
-  <h2 style="z-index:2">I hope this year is kinder to you,<br>and reminds you how deeply loved you are.</h2>
+  <h2>I hope this year is kinder to you,<br>and reminds you how deeply loved you are.</h2>
   <img src="final.gif" class="final-gif">
 </div>
 
@@ -433,6 +405,8 @@ function startSound(){
 
 </body>
 </html>
+
+
 
 
 
